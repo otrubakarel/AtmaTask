@@ -24,6 +24,7 @@ void AAtmaTaskPlayerController::SetupInputComponent()
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
 	{
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAtmaTaskPlayerController::Input_Move);
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &AAtmaTaskPlayerController::Input_StopMove);
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AAtmaTaskPlayerController::Input_Attack);
 	}
 }
@@ -31,19 +32,27 @@ void AAtmaTaskPlayerController::SetupInputComponent()
 void AAtmaTaskPlayerController::Input_Move(const FInputActionValue& InputActionValue)
 {
 	const FVector2D InputAxisVector = InputActionValue.Get<FVector2d>();
-	const FVector MovementVector = FVector(0.0f, -InputAxisVector.Y, InputAxisVector.X);
+	const FVector MovementVector = FVector(0.0f, -InputAxisVector.Y, 0.0f);
+
+	UE_LOG(LogTemp, Warning, TEXT("Player ship move: %s"), *MovementVector.ToString());
 
 	if (APawn* ControlledPawn = GetPawn())
 	{
 		ControlledPawn->AddMovementInput(MovementVector, 1.f);
 	}
 
-	// TODO: Movement should be only left/right. Up/Down should accel/decelerate the world movement mainly
-	// and maybe move the ship slightly up/down
+	int32 Direction = InputAxisVector.X > 0 ? 1 : InputAxisVector.X < 0 ? -1 : 0;
+	OnSpeedChange.Broadcast(Direction);
+}
+
+void AAtmaTaskPlayerController::Input_StopMove()
+{
+	OnSpeedChange.Broadcast(0);
 }
 
 void AAtmaTaskPlayerController::Input_Attack(const FInputActionValue& InputActionValue)
 {
 	// Player ship attack
 	// TODO: Fire a projectile / laser into the cursor direction
+	UE_LOG(LogTemp, Warning, TEXT("Player ship attack"));
 }

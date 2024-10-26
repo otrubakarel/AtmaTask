@@ -4,6 +4,9 @@
 #include "GameFramework/PlayerController.h"
 #include "AtmaTaskPlayerController.generated.h"
 
+// 0 = back to default idle speed, 1 = Accelerate, -1 = Stop
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSpeedChangeSignature, int32, Direction);
+
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
@@ -12,6 +15,10 @@ UCLASS()
 class AAtmaTaskPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(BlueprintAssignable, Category = "Input")
+	FOnSpeedChangeSignature OnSpeedChange;
 
 protected:
 	virtual void BeginPlay() override;
@@ -28,5 +35,6 @@ protected:
 
 private:
 	void Input_Move(const FInputActionValue& InputActionValue);
+	void Input_StopMove();
 	void Input_Attack(const FInputActionValue& InputActionValue);
 };
