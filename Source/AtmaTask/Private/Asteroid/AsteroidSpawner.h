@@ -22,8 +22,10 @@ protected:
 	float SpawnInterval = 1.0f;
 
 private:
-	FTimerHandle SpawnTimerHandle;
+	FTimerHandle AsteroidSpawnTimerHandle;
+	FTimerHandle BackgroundAsteroidSpawnTimerHandle;
 	
 	void SpawnAsteroid();
+	void SpawnBackgroundAsteroid();
 
 };

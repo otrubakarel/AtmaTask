@@ -2,6 +2,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AAtmaTaskPlayerShip::AAtmaTaskPlayerShip()
 {
@@ -28,6 +29,16 @@ AAtmaTaskPlayerShip::AAtmaTaskPlayerShip()
 
 void AAtmaTaskPlayerShip::BeginPlay()
 {
-	Super::BeginPlay();
+	Super::BeginPlay();	
+}
+
+void AAtmaTaskPlayerShip::Die_Implementation()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Player Ship has died!"));
 	
+	// pause the game
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
+	SetActorHiddenInGame(true);
+
+	// TODO: Restart the game, show score etc
 }

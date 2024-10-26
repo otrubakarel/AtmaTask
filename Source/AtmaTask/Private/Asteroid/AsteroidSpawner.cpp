@@ -12,7 +12,7 @@ void AAsteroidSpawner::BeginPlay()
 	Super::BeginPlay();
 
 	// Create a timer to spawn asteroids
-	GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AAsteroidSpawner::SpawnAsteroid, SpawnInterval, true);
+	GetWorldTimerManager().SetTimer(AsteroidSpawnTimerHandle, this, &AAsteroidSpawner::SpawnAsteroid, SpawnInterval, true);
 }
 
 void AAsteroidSpawner::SpawnAsteroid()
@@ -22,5 +22,10 @@ void AAsteroidSpawner::SpawnAsteroid()
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 	GetWorld()->SpawnActor<AAsteroid>(AsteroidClass, SpawnLocation, FRotator::ZeroRotator, SpawnParams);
+}
+
+void AAsteroidSpawner::SpawnBackgroundAsteroid()
+{
+	// TODO: Implement
 }
 
