@@ -21,6 +21,7 @@ public:
 	
 	/* Interaction Interface */
 	virtual void Die_Implementation() override;
+	virtual void Damage_Implementation(float DamageAmount) override;
 	/* End Interaction Interface */
 
 protected:

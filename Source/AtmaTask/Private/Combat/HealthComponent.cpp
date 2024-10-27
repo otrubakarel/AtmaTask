@@ -22,7 +22,10 @@ void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Initialize the health widget
 	HealthWidget = Cast<UHealthWidget>(GetUserWidgetObject());
+	Health = MaxHealth;
+	UpdateHealth(0);
 }
 
 void UHealthComponent::UpdateHealth(float HealthChange)
@@ -37,7 +40,29 @@ void UHealthComponent::UpdateHealth(float HealthChange)
 	if (Health <= 0.0f)
 	{
 		ICombatInterface::Execute_Die(GetOwner());
-	}
+	}	
 }
 
+void UHealthComponent::TakeDamage(float DamageAmount)
+{
+	UpdateHealth(-DamageAmount);
 
+	// Clear previous regen timer
+	if (RegenTimer.IsValid()) GetWorld()->GetTimerManager().ClearTimer(RegenTimer);
+
+	// Start regenerating health after 2s of not taking damage
+	GetWorld()->GetTimerManager().SetTimer(RegenTimer, this, &UHealthComponent::RegenerateHealth, 0.5f, true, 2.0f);	
+}
+
+void UHealthComponent::RegenerateHealth()
+{
+	if (Health < MaxHealth)
+	{
+		UpdateHealth(Regeneration);
+	}
+	else
+	{
+		// Clear interval when health is full
+		GetWorld()->GetTimerManager().ClearTimer(RegenTimer);
+	}
+}

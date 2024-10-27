@@ -16,5 +16,8 @@ class ICombatInterface
 
 public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Combat")
+	void Damage(float DamageAmount);
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Combat")
 	void Die();
 };

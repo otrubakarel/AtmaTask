@@ -77,6 +77,6 @@ void AAsteroid::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Othe
 	// Check if the overlapped actor has Combat Interface, if so, apply damage
 	if (OtherActor->Implements<UCombatInterface>())
 	{
-		ICombatInterface::Execute_Die(OtherActor); // Kill for now
+		ICombatInterface::Execute_Damage(OtherActor, AsteroidDamage); // Apply damage to the collided actor
 	}
 }

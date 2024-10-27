@@ -25,6 +25,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AtmaTask|Asteroid")
 	float Speed = 2000.0f;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AtmaTask|Asteroid")
+	float AsteroidDamage = 50.0f;
+
 private:
 	void SetRandomRotation();
 	void SetRandomSize();

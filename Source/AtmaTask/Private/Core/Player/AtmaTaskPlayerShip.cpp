@@ -43,3 +43,8 @@ void AAtmaTaskPlayerShip::Die_Implementation()
 	SetActorHiddenInGame(true);
 	UAtmaTaskFunctionLibrary::GetAtmaTaskGameInstance(this)->EndGame(false);
 }
+
+void AAtmaTaskPlayerShip::Damage_Implementation(float DamageAmount)
+{
+	HealthComponent->TakeDamage(DamageAmount);
+}
