@@ -5,6 +5,7 @@
 #include "GameFramework/Pawn.h"
 #include "AtmaTaskPlayerShip.generated.h"
 
+class UHealthComponent;
 class UFloatingPawnMovement;
 class UCameraComponent;
 class USpringArmComponent;
@@ -39,6 +40,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AtmaTask|Ship")
 	USkeletalMeshComponent* ShipMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AtmaTask|Ship")
+	UHealthComponent* HealthComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AtmaTask|Camera")
 	float CameraDistance = 1000.0f;

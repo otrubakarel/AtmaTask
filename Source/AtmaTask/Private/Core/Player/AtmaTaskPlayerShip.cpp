@@ -1,10 +1,10 @@
 #include "Core/Player/AtmaTaskPlayerShip.h"
 #include "Camera/CameraComponent.h"
+#include "Combat/HealthComponent.h"
 #include "Core/AtmaTaskFunctionLibrary.h"
 #include "Core/AtmaTaskGameInstance.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Kismet/GameplayStatics.h"
 
 AAtmaTaskPlayerShip::AAtmaTaskPlayerShip()
 {
@@ -27,6 +27,9 @@ AAtmaTaskPlayerShip::AAtmaTaskPlayerShip()
 
 	ShipMesh = CreateDefaultSubobject<USkeletalMeshComponent>("Ship");
 	ShipMesh->SetupAttachment(GetRootComponent());
+	
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
+	HealthComponent->SetupAttachment(ShipMesh);
 }
 
 void AAtmaTaskPlayerShip::BeginPlay()
