@@ -19,7 +19,7 @@ public:
 	AAtmaTaskPlayerShip();
 	
 	/* Interaction Interface */
-	virtual void Die_Implementation();
+	virtual void Die_Implementation() override;
 	/* End Interaction Interface */
 
 protected:
