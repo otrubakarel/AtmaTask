@@ -1,5 +1,7 @@
 #include "Core/Player/AtmaTaskPlayerShip.h"
 #include "Camera/CameraComponent.h"
+#include "Core/AtmaTaskFunctionLibrary.h"
+#include "Core/AtmaTaskGameInstance.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -35,10 +37,6 @@ void AAtmaTaskPlayerShip::BeginPlay()
 void AAtmaTaskPlayerShip::Die_Implementation()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Player Ship has died!"));
-	
-	// pause the game
-	UGameplayStatics::SetGamePaused(GetWorld(), true);
 	SetActorHiddenInGame(true);
-
-	// TODO: Restart the game, show score etc
+	UAtmaTaskFunctionLibrary::GetAtmaTaskGameInstance(this)->EndGame(false);
 }

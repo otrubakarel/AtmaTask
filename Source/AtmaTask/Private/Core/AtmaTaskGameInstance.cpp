@@ -8,6 +8,18 @@ void UAtmaTaskGameInstance::Init()
 	Super::Init();
 
 	LoadScore();
+	UE_LOG(LogTemp, Warning, TEXT("Wins: %d, Losses: %d"), Wins, Losses);
+}
+
+void UAtmaTaskGameInstance::EndGame(bool bIsWin)
+{
+	// Update and save score
+	bIsWin ? Wins++ : Losses++;
+	SaveScore();
+
+	// Pause game, show end game screen
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
+	// TODO: Show end game screen
 }
 
 void UAtmaTaskGameInstance::SaveScore()
@@ -17,13 +29,13 @@ void UAtmaTaskGameInstance::SaveScore()
 	{
 		SaveGameInstance->Wins = Wins;
 		SaveGameInstance->Losses = Losses;
-		UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("AtmaTaskSlot1"), 0);
+		UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("AtmaTaskSlot"), 0);
 	}
 }
 
 void UAtmaTaskGameInstance::LoadScore()
 {
-	UAtmaTaskSaveGame* LoadGameInstance = Cast<UAtmaTaskSaveGame>(UGameplayStatics::LoadGameFromSlot(TEXT("AtmaTaskSlot1"), 0));
+	UAtmaTaskSaveGame* LoadGameInstance = Cast<UAtmaTaskSaveGame>(UGameplayStatics::LoadGameFromSlot(TEXT("AtmaTaskSlot"), 0));
 	if (LoadGameInstance)
 	{
 		Wins = LoadGameInstance->Wins;

@@ -18,6 +18,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Score")
 	int32 Losses = 0;
 
+	UFUNCTION(BlueprintCallable, Category = "Score")
+	void EndGame(bool bIsWin);
+
 	// Load and save user score
 	void SaveScore();
 	void LoadScore();	

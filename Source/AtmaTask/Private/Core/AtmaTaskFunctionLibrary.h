@@ -7,6 +7,8 @@
 #include "AtmaTaskFunctionLibrary.generated.h"
 
 class AAtmaTaskPlayerController;
+class UAtmaTaskGameInstance;
+
 /**
  * 
  */
@@ -16,7 +18,10 @@ class UAtmaTaskFunctionLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "AtmaTask", meta = (HidePin = "WorldContextObject", DefaultToSelf = "WorldContextObject"))
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "AtmaTask", meta = (HidePin = "WorldContextObject", DefaultToSelf = "WorldContextObject"))
 	static AAtmaTaskPlayerController* GetAtmaTaskPlayerController(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "AtmaTask", meta = (HidePin = "WorldContextObject", DefaultToSelf = "WorldContextObject"))
+	static UAtmaTaskGameInstance* GetAtmaTaskGameInstance(UObject* WorldContextObject);
 	
 };

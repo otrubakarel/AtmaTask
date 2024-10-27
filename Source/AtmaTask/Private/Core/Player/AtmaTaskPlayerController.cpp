@@ -34,20 +34,20 @@ void AAtmaTaskPlayerController::Input_Move(const FInputActionValue& InputActionV
 	const FVector2D InputAxisVector = InputActionValue.Get<FVector2d>();
 	const FVector MovementVector = FVector(0.0f, -InputAxisVector.Y, 0.0f);
 
-	UE_LOG(LogTemp, Warning, TEXT("Player ship move: %s"), *MovementVector.ToString());
-
 	if (APawn* ControlledPawn = GetPawn())
 	{
 		ControlledPawn->AddMovementInput(MovementVector, 1.f);
 	}
 
 	int32 Direction = InputAxisVector.X > 0 ? 1 : InputAxisVector.X < 0 ? -1 : 0;
-	OnSpeedChange.Broadcast(Direction);
+	SpeedDirection = Direction;
+	OnSpeedChange.Broadcast(SpeedDirection);
 }
 
 void AAtmaTaskPlayerController::Input_StopMove()
 {
-	OnSpeedChange.Broadcast(0);
+	SpeedDirection = 0;
+	OnSpeedChange.Broadcast(SpeedDirection);
 }
 
 void AAtmaTaskPlayerController::Input_Attack(const FInputActionValue& InputActionValue)

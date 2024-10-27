@@ -32,8 +32,12 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> AttackAction;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Input")
+	int32 SpeedDirection = 0;
 
 private:
+	
 	void Input_Move(const FInputActionValue& InputActionValue);
 	void Input_StopMove();
 	void Input_Attack(const FInputActionValue& InputActionValue);
