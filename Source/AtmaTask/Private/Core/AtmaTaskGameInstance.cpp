@@ -1,7 +1,7 @@
 #include "Core/AtmaTaskGameInstance.h"
-
 #include "AtmaTaskSaveGame.h"
 #include "Kismet/GameplayStatics.h"
+#include "Player/AtmaTaskPlayerController.h"
 
 void UAtmaTaskGameInstance::Init()
 {
@@ -19,7 +19,10 @@ void UAtmaTaskGameInstance::EndGame(bool bIsWin)
 
 	// Pause game, show end game screen
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
-	// TODO: Show end game screen
+
+	// Show end game screen
+	AAtmaTaskPlayerController* PlayerController = Cast<AAtmaTaskPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	PlayerController->ShowEndGameScreen(bIsWin);
 }
 
 void UAtmaTaskGameInstance::SaveScore()

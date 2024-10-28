@@ -18,8 +18,11 @@ class AAtmaTaskPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Input")
+	UPROPERTY(BlueprintAssignable, BlueprintReadWrite, Category = "Input")
 	FOnSpeedChangeSignature OnSpeedChange;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Combat")
+	void ShowEndGameScreen(bool bSuccess);
 
 protected:
 	virtual void BeginPlay() override;
