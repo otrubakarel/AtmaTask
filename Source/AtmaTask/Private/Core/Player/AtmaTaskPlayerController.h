@@ -38,6 +38,10 @@ protected:
 	int32 SpeedDirection = 0;
 
 private:
+
+	FTimerHandle AttackCooldownTimerHandle;
+	bool bCanAttack = true;
+	void AttackCooldownFinished();
 	
 	void Input_Move(const FInputActionValue& InputActionValue);
 	void Input_StopMove();

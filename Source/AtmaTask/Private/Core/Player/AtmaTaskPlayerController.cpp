@@ -56,6 +56,13 @@ void AAtmaTaskPlayerController::Input_StopMove()
 
 void AAtmaTaskPlayerController::Input_Attack(const FInputActionValue& InputActionValue)
 {
+	// Check if we can attack (cooldown)
+	if (!bCanAttack) return;
+	bCanAttack = false;
+
+	// Set attack cooldown
+	GetWorldTimerManager().SetTimer(AttackCooldownTimerHandle, this, &AAtmaTaskPlayerController::AttackCooldownFinished, 1.0f, false);
+	
 	// Player ship attack
 	UE_LOG(LogTemp, Warning, TEXT("Player ship attack"));
 
@@ -78,4 +85,9 @@ void AAtmaTaskPlayerController::Input_Attack(const FInputActionValue& InputActio
 			ICombatInterface::Execute_Damage(HitActor, ICombatInterface::Execute_GetAttackDamage(GetPawn()));
 		}
 	}
+}
+
+void AAtmaTaskPlayerController::AttackCooldownFinished()
+{
+	bCanAttack = true;
 }

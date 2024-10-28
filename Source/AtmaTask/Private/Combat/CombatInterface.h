@@ -23,4 +23,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Combat")
 	float GetAttackDamage();
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Combat")
+	float GetAttackCooldown();
 };

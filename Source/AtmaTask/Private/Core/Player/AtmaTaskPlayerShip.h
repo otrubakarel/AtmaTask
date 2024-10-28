@@ -23,6 +23,7 @@ public:
 	virtual void Die_Implementation() override;
 	virtual void Damage_Implementation(float DamageAmount) override;
 	virtual float GetAttackDamage_Implementation() override;
+	virtual float GetAttackCooldown_Implementation() override {return AttackCooldown;}
 	/* End Interaction Interface */
 
 protected:
@@ -51,5 +52,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AtmaTask|Combat")
 	float AttackDamage = 50.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AtmaTask|Combat")
+	float AttackCooldown = 1.0f;
 
 };
