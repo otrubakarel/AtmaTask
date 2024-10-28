@@ -48,3 +48,8 @@ void AAtmaTaskPlayerShip::Damage_Implementation(float DamageAmount)
 {
 	HealthComponent->TakeDamage(DamageAmount);
 }
+
+float AAtmaTaskPlayerShip::GetAttackDamage_Implementation()
+{
+	return AttackDamage;
+}

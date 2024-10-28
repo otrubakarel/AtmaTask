@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Combat/CombatInterface.h"
 #include "GameFramework/Pawn.h"
 #include "EnemyShip.generated.h"
 
@@ -11,7 +12,7 @@ class UHealthComponent;
 class UBehaviorTree;
 
 UCLASS()
-class AEnemyShip : public APawn
+class AEnemyShip : public APawn, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -19,6 +20,12 @@ public:
 	AEnemyShip();
 
 	virtual void PossessedBy(AController* NewController) override;
+	
+	/* Interaction Interface */
+	virtual void Die_Implementation() override;
+	virtual void Damage_Implementation(float DamageAmount) override;
+	virtual float GetAttackDamage_Implementation() override;
+	/* End Interaction Interface */
 
 protected:
 	virtual void BeginPlay() override;
@@ -33,6 +40,9 @@ protected:
 	UStaticMeshComponent* ShipMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AtmaTask|Ship")
+	USceneComponent* ShipWrapper;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AtmaTask|Ship")
 	UHealthComponent* HealthComponent;
 
 	UPROPERTY(BlueprintReadOnly, Category = "AtmaTask|AI")
@@ -40,4 +50,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "AtmaTask|AI")
 	TObjectPtr<UBehaviorTree> BehaviorTree;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AtmaTask|Combat")
+	float AttackDamage = 50.0f;
 };

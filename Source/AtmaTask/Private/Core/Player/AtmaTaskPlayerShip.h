@@ -22,6 +22,7 @@ public:
 	/* Interaction Interface */
 	virtual void Die_Implementation() override;
 	virtual void Damage_Implementation(float DamageAmount) override;
+	virtual float GetAttackDamage_Implementation() override;
 	/* End Interaction Interface */
 
 protected:
@@ -47,5 +48,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AtmaTask|Camera")
 	float CameraDistance = 1000.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AtmaTask|Combat")
+	float AttackDamage = 50.0f;
 
 };

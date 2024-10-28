@@ -3,6 +3,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Combat/CombatInterface.h"
 
 void AAtmaTaskPlayerController::BeginPlay()
 {
@@ -25,7 +26,7 @@ void AAtmaTaskPlayerController::SetupInputComponent()
 	{
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAtmaTaskPlayerController::Input_Move);
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &AAtmaTaskPlayerController::Input_StopMove);
-		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AAtmaTaskPlayerController::Input_Attack);
+		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Completed, this, &AAtmaTaskPlayerController::Input_Attack);
 	}
 }
 
@@ -36,6 +37,9 @@ void AAtmaTaskPlayerController::Input_Move(const FInputActionValue& InputActionV
 
 	if (APawn* ControlledPawn = GetPawn())
 	{
+		// Move left/right only when in bounds
+		if (ControlledPawn->GetActorLocation().Y < -2500.f && MovementVector.Y < 0) return;
+		if (ControlledPawn->GetActorLocation().Y > 2500.f && MovementVector.Y > 0) return;
 		ControlledPawn->AddMovementInput(MovementVector, 1.f);
 	}
 
@@ -53,6 +57,25 @@ void AAtmaTaskPlayerController::Input_StopMove()
 void AAtmaTaskPlayerController::Input_Attack(const FInputActionValue& InputActionValue)
 {
 	// Player ship attack
-	// TODO: Fire a projectile / laser into the cursor direction
 	UE_LOG(LogTemp, Warning, TEXT("Player ship attack"));
+
+	// Get hit result under cursor
+	FHitResult HitResult;
+
+	if (GetHitResultUnderCursor(ECC_GameTraceChannel2, false, HitResult))
+	{
+		AActor* HitActor = HitResult.GetActor();
+
+		if (!HitActor) return;
+
+		// There is an actor at the mouse cursor position
+		UE_LOG(LogTemp, Warning, TEXT("Actor under cursor: %s"), *HitActor->GetName());
+
+		// Check if the actor can be damaged, if so, apply damage
+		if (HitActor->Implements<UCombatInterface>())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Damaging actor for %f"), ICombatInterface::Execute_GetAttackDamage(GetPawn()));
+			ICombatInterface::Execute_Damage(HitActor, ICombatInterface::Execute_GetAttackDamage(GetPawn()));
+		}
+	}
 }

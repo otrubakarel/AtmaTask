@@ -5,6 +5,7 @@
 #include "AtmaTaskPlayerController.generated.h"
 
 // 0 = back to default idle speed, 1 = Accelerate, -1 = Stop
+// This could have been done multiple ways, but I chose to use a delegate so that many classes can listen to this event as needed
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSpeedChangeSignature, int32, Direction);
 
 class UInputMappingContext;
