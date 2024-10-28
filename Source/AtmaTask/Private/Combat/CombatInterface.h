@@ -16,7 +16,7 @@ class ICombatInterface
 
 public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Combat")
-	void Damage(float DamageAmount);
+	void Damage(float DamageAmount, FVector HitLocation = FVector::ZeroVector);
 	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Combat")
 	void Die();
@@ -26,4 +26,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Combat")
 	float GetAttackCooldown();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Combat")
+	FVector GetWeaponSocket();
 };

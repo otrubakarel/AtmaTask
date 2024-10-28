@@ -37,6 +37,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Input")
 	int32 SpeedDirection = 0;
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Combat")
+	void ShowAttackEffect(FVector StartLocation, FVector EndLocation);
+
 private:
 
 	FTimerHandle AttackCooldownTimerHandle;

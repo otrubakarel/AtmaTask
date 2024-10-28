@@ -44,7 +44,7 @@ void AAtmaTaskPlayerShip::Die_Implementation()
 	UAtmaTaskFunctionLibrary::GetAtmaTaskGameInstance(this)->EndGame(false);
 }
 
-void AAtmaTaskPlayerShip::Damage_Implementation(float DamageAmount)
+void AAtmaTaskPlayerShip::Damage_Implementation(float DamageAmount, FVector HitLocation)
 {
 	HealthComponent->TakeDamage(DamageAmount);
 }

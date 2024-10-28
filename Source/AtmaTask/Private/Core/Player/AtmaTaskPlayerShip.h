@@ -21,9 +21,10 @@ public:
 	
 	/* Interaction Interface */
 	virtual void Die_Implementation() override;
-	virtual void Damage_Implementation(float DamageAmount) override;
+	virtual void Damage_Implementation(float DamageAmount, FVector HitLocation = FVector::ZeroVector) override;
 	virtual float GetAttackDamage_Implementation() override;
-	virtual float GetAttackCooldown_Implementation() override {return AttackCooldown;}
+	virtual float GetAttackCooldown_Implementation() override { return AttackCooldown; }
+	virtual FVector GetWeaponSocket_Implementation() override { return ShipMesh->GetSocketLocation(FName("Weapon")); }
 	/* End Interaction Interface */
 
 protected:

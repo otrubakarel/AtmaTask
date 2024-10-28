@@ -23,7 +23,7 @@ public:
 	
 	/* Interaction Interface */
 	virtual void Die_Implementation() override;
-	virtual void Damage_Implementation(float DamageAmount) override;
+	virtual void Damage_Implementation(float DamageAmount, FVector HitLocation = FVector::ZeroVector) override;
 	virtual float GetAttackDamage_Implementation() override;
 	/* End Interaction Interface */
 

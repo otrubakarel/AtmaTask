@@ -48,7 +48,7 @@ void AEnemyShip::Die_Implementation()
 	Destroy();
 }
 
-void AEnemyShip::Damage_Implementation(float DamageAmount)
+void AEnemyShip::Damage_Implementation(float DamageAmount, FVector HitLocation)
 {
 	HealthComponent->TakeDamage(DamageAmount);
 }
