@@ -22,6 +22,7 @@ void AAtmaTaskPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
+	// Bind all Input Events to Functions
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
 	{
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAtmaTaskPlayerController::Input_Move);
@@ -44,6 +45,7 @@ void AAtmaTaskPlayerController::Input_Move(const FInputActionValue& InputActionV
 		ControlledPawn->AddMovementInput(MovementVector, 1.f);
 	}
 
+	// Broadcast speed change
 	int32 Direction = InputAxisVector.X > 0 ? 1 : InputAxisVector.X < 0 ? -1 : 0;
 	SpeedDirection = Direction;
 	OnSpeedChange.Broadcast(SpeedDirection);

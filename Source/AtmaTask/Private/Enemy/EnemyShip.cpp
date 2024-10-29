@@ -36,7 +36,8 @@ void AEnemyShip::BeginPlay()
 void AEnemyShip::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	
+
+	// Init AI logic
 	AtmaTaskAIController = Cast<AAtmaTaskAIController>(NewController);
 	AtmaTaskAIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
 	AtmaTaskAIController->RunBehaviorTree(BehaviorTree);
@@ -45,7 +46,6 @@ void AEnemyShip::PossessedBy(AController* NewController)
 void AEnemyShip::Die_Implementation()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Enemy destroyed!"));
-	// TODO: Implement death behavior
 	Destroy();
 }
 
@@ -61,10 +61,6 @@ float AEnemyShip::GetAttackDamage_Implementation()
 
 void AEnemyShip::Attack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Enemy Attack"));
-	UE_LOG(LogTemp, Warning, TEXT("Enemy Attack %s"), *ShipMesh->GetSocketLocation(FName("Weapon")).ToString());
-	UE_LOG(LogTemp, Warning, TEXT("Enemy Attack %s"), *UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetName());
-
 	AActor* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	UE_LOG(LogTemp, Warning, TEXT("PlayerPawn: %s"), *PlayerPawn->GetName());
 	ICombatInterface::Execute_Damage(PlayerPawn, AttackDamage, PlayerPawn->GetActorLocation());

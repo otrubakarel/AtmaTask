@@ -19,6 +19,7 @@ void AAsteroid::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Bind the OnSpeedChange event to the PlayerController
 	AAtmaTaskPlayerController* PC = UAtmaTaskFunctionLibrary::GetAtmaTaskPlayerController(this);
 	if (PC)
 	{
@@ -54,6 +55,7 @@ void AAsteroid::SetRandomSize()
 
 void AAsteroid::OnSpeedChange(int32 Direction)
 {
+	// Change the speed based on the player's current speed
 	if (Direction == -1)
 	{
 		Speed = 500.0f;
