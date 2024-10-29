@@ -37,6 +37,9 @@ void AAsteroid::Tick(float DeltaTime)
 
 	// Just a simple translation downwards
 	AddActorWorldOffset(FVector(0.0f, 0.0f, -Speed * DeltaTime));
+
+	// Destroy the asteroid if it goes below a certain Z value
+	if (GetActorLocation().Z < -4000.0f) Destroy();
 }
 
 void AAsteroid::SetRandomRotation()

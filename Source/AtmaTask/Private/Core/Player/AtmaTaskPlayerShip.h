@@ -55,6 +55,6 @@ protected:
 	float AttackDamage = 50.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AtmaTask|Combat")
-	float AttackCooldown = 1.0f;
+	float AttackCooldown = 0.5f;
 
 };

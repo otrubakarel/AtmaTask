@@ -5,6 +5,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Combat/HealthComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
+#include "Kismet/GameplayStatics.h"
 
 AEnemyShip::AEnemyShip()
 {
@@ -58,3 +59,14 @@ float AEnemyShip::GetAttackDamage_Implementation()
 	return AttackDamage;
 }
 
+void AEnemyShip::Attack()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Enemy Attack"));
+	UE_LOG(LogTemp, Warning, TEXT("Enemy Attack %s"), *ShipMesh->GetSocketLocation(FName("Weapon")).ToString());
+	UE_LOG(LogTemp, Warning, TEXT("Enemy Attack %s"), *UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetName());
+
+	AActor* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	UE_LOG(LogTemp, Warning, TEXT("PlayerPawn: %s"), *PlayerPawn->GetName());
+	ICombatInterface::Execute_Damage(PlayerPawn, AttackDamage, PlayerPawn->GetActorLocation());
+	ShowAttackEffect(ShipMesh->GetSocketLocation(FName("Weapon")), PlayerPawn->GetActorLocation());
+}

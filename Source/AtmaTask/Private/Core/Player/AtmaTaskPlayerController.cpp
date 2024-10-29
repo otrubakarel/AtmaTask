@@ -27,6 +27,7 @@ void AAtmaTaskPlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAtmaTaskPlayerController::Input_Move);
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &AAtmaTaskPlayerController::Input_StopMove);
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Completed, this, &AAtmaTaskPlayerController::Input_Attack);
+		EnhancedInputComponent->BindAction(ExitAction, ETriggerEvent::Started, this, &AAtmaTaskPlayerController::Input_Exit);
 	}
 }
 
@@ -84,7 +85,8 @@ void AAtmaTaskPlayerController::Input_Attack(const FInputActionValue& InputActio
 			
 			// Set attack cooldown
 			bCanAttack = false;
-			GetWorldTimerManager().SetTimer(AttackCooldownTimerHandle, this, &AAtmaTaskPlayerController::AttackCooldownFinished, 1.0f, false);
+			OnAttackCooldown.Broadcast(bCanAttack);
+			GetWorldTimerManager().SetTimer(AttackCooldownTimerHandle, this, &AAtmaTaskPlayerController::AttackCooldownFinished, ICombatInterface::Execute_GetAttackCooldown(GetPawn()), false);
 
 			// Show attack effect
 			ShowAttackEffect(ICombatInterface::Execute_GetWeaponSocket(GetPawn()), HitResult.ImpactPoint);
@@ -92,7 +94,14 @@ void AAtmaTaskPlayerController::Input_Attack(const FInputActionValue& InputActio
 	}
 }
 
+void AAtmaTaskPlayerController::Input_Exit()
+{
+	// Exit the game
+	FGenericPlatformMisc::RequestExit(false);
+}
+
 void AAtmaTaskPlayerController::AttackCooldownFinished()
 {
 	bCanAttack = true;
+	OnAttackCooldown.Broadcast(bCanAttack);
 }

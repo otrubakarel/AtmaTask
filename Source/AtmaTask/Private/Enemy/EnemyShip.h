@@ -45,12 +45,19 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AtmaTask|Ship")
 	UHealthComponent* HealthComponent;
 
-	UPROPERTY(BlueprintReadOnly, Category = "AtmaTask|AI")
-	TObjectPtr<AAtmaTaskAIController> AtmaTaskAIController;
-
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "AtmaTask|AI")
 	TObjectPtr<UBehaviorTree> BehaviorTree;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AtmaTask|Combat")
 	float AttackDamage = 50.0f;
+
+	UFUNCTION(BlueprintCallable, Category = "AtmaTask|Combat")
+	void Attack();
+	
+	UFUNCTION(BlueprintImplementableEvent, Category = "Combat")
+	void ShowAttackEffect(FVector StartLocation, FVector EndLocation);
+
+private:
+	UPROPERTY()
+	TObjectPtr<AAtmaTaskAIController> AtmaTaskAIController;
 };
